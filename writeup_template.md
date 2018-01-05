@@ -2,7 +2,11 @@
 
 ## Gary Holness
 
-### You can use this file as a template for your writeup if you want to submit it as a markdown file. But feel free to use some other method and submit a pdf if you prefer.
+###  v2. Revised submission encorporating feedback from review of initial project submission.
+         These revisions include modifying the Hough tranform parameters and extending the
+         line drawing the entire height of the video frame.
+###  v1. Initial submission of project concerning finding lane lines on the road
+
 
 ---
 
@@ -42,7 +46,7 @@ and negative slope (left lane line).  Once the edges were partitioned, I perform
 linear fit (polynomial of degree 1) on each set to get the parameters of the line
 describing the left lane and right lane.  Then, I took the domain for the x-values for
 the left-lane and right-lane edges and used these to extrapolate using the equation for
-the left and right lane lines returned from the linear fit.   When draw the lane lines,
+the left and right lane lines returned from the linear fit.   When drawing the lane lines,
 I widen the line-width for the red visualization of the lane lines.
 
 Applying my code to the video required a little bit of tinkering with parameters for the
@@ -65,6 +69,12 @@ to physically change the path for the python version installed by default to poi
 Python 3.5.2.  Otherwise, there is a kernel error when running the Jupyter notebook.
 These issues consumed roughly 80% of the time I spent on this project and made
 for an experience that was not much fun.
+
+Attribution of code...
+Some of the Python code I used from my quizzes concerning identificatino of lane lines
+and the Hough transform.  For the subplot code, I used Stack Exchange to find examples
+that I modified for my purposes.  For the Python polynomial fit function, I consulted
+sources on the Python.org web-site and Stack Exchange.
 
 ![alt text][image1]
 
@@ -95,4 +105,20 @@ the region of interest extends.   When the car moves slowly
 there's no need to go to the horizon, but when the car moves
 fast, proportional to it's speed, the region of interest could
 perhaps extend farther towards the horizon.
+
+Revisions were made to the project as a result of feedback from
+the reviewer.  As recommended, I changed the Hough transform
+parameters threshold=50, min_line_len=100 and max_line_gap=160.
+I also extended the draw lines to run the entire top to bottom 
+height of the image, as recommended.  Previously, I was only
+running the span from the detected line that had max y-value
+and min y-value in image coordinates.  The thought process was
+that the drawn line need run the aformentioned domain (max to min).
+To draw lane lines the entire span of the image, I need to solve
+the equation for the line (y= mx + b) substituting for y, the
+value of y=imshape[0] (bottom of the image).  Therefore,
+x = (imshape[0] - b)/m.  This gives us the values for x needed
+to extrapolate the line obtained using the linear (polynomial
+of degree 1) fit from the bottom edge of the image.
+
 
